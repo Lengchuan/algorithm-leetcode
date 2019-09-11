@@ -26,7 +26,7 @@ import java.util.Map;
 //二、两次hash表，第一次遍历把索引数据存入hash表，第二次遍历与hash表数据对比,找到符合条件的数据，
 //    时间复杂度O(n)，空间复杂度O(n)-->取决于hash表大小
 //三、一次hash表，基于(二),在插入hash表的同时进行比较，找到符合条件的数据,时间复杂度O(n)，空间复杂度O(n)
-public class A1 {
+public class TwoSum_P1 {
     public int[] twoSum(int[] nums, int target) {
 
         Map<Integer, Integer> numsMap = new HashMap<>();
@@ -43,7 +43,7 @@ public class A1 {
 
     public static void main(String[] args) {
         int[] nums = {2, 7, 11, 15};
-        A1 a1 = new A1();
-        System.out.println(Arrays.toString(a1.twoSum(nums, 9)));
+        TwoSum_P1 twoSumP1 = new TwoSum_P1();
+        System.out.println(Arrays.toString(twoSumP1.twoSum(nums, 9)));
     }
 }

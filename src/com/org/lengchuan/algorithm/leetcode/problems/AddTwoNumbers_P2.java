@@ -21,7 +21,7 @@ package com.org.lengchuan.algorithm.leetcode.problems;
 //1. 链表对应结点相加时增加前一个结点的进位，并保存下一个结点的进位；除法得进位，模得结果。
 //2. 两个链表长度不一致时，要处理较长链表剩余的高位和进位计算的值；
 //3. 如果最高位计算时还产生进位，则还需要添加一个额外结点。
-public class A2 {
+public class AddTwoNumbers_P2 {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode result = null;
         ListNode tmp = null;
@@ -63,7 +63,7 @@ public class A2 {
         l2.next = l21;
         l21.next = l22;
 
-        A2 a2 = new A2();
+        AddTwoNumbers_P2 a2 = new AddTwoNumbers_P2();
         ListNode l3 = a2.addTwoNumbers(l1, l2);
         System.out.println(l3);
     }
