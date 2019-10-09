@@ -24,7 +24,9 @@ package com.org.lengchuan.algorithm.leetcode.problems;
 //
 // Related Topics 哈希表 双指针 字符串 Sliding Window
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -79,16 +81,45 @@ public class LengthOfLongestSubstring_P3 {
         return true;
     }
 
+    /**
+     * 2. 基于hash表
+     * 遍历字符串，用hash表来存储记录字符a上一次出现的位置x，用y 来记录最近一次字符a出现的位置，
+     * 则最大子串存在于i(当前位置)-y中间的这一段，记为max，每次出现重复字符后，更新max，直到遍历整个字符串
+     *
+     * @param s
+     * @return
+     */
+    public int lengthOfLongestSubstring(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+
+        int max = 0;
+        int y = -1;
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0, l = s.length(); i < l; i++) {
+            Integer x = map.get(s.charAt(i));
+            if (x != null) {//存在重复的字符
+                y = Math.max(y, x);
+            }
+
+            max = Math.max(max, i - y);
+            map.put(s.charAt(i), i);
+        }
+
+        return max;
+    }
+
     public static void main(String[] args) {
         LengthOfLongestSubstring_P3 a = new LengthOfLongestSubstring_P3();
         String s1 = "abcabcbb";
         String s2 = "bbbbb";
         String s3 = "pwwkew";
-        String s4 = "a";
+        String s4 = "au";
 
-        System.out.println("a1-->s1-->" + a.lengthOfLongestSubstring1(s1));
-        System.out.println("a1-->s2-->" + a.lengthOfLongestSubstring1(s2));
-        System.out.println("a1-->s3-->" + a.lengthOfLongestSubstring1(s3));
-        System.out.println("a1-->s4-->" + a.lengthOfLongestSubstring1(s4));
+        System.out.println("a1-->s1-->" + a.lengthOfLongestSubstring(s1));
+        System.out.println("a1-->s2-->" + a.lengthOfLongestSubstring(s2));
+        System.out.println("a1-->s3-->" + a.lengthOfLongestSubstring(s3));
+        System.out.println("a1-->s4-->" + a.lengthOfLongestSubstring(s4));
     }
 }
