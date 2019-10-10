@@ -67,26 +67,27 @@ public class AddTwoNumbers_P2 {
         ListNode l3 = a2.addTwoNumbers(l1, l2);
         System.out.println(l3);
     }
-}
 
-class ListNode {
-    int val;
-    ListNode next;
+    static class ListNode {
+        int val;
+        ListNode next;
 
-    ListNode(int x) {
-        val = x;
-    }
-
-    @Override
-    public String toString() {
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(val);
-        ListNode tmp = next;
-        while (tmp != null) {
-            stringBuilder.append("-->").append(tmp.val);
-            tmp = tmp.next;
+        ListNode(int x) {
+            val = x;
         }
-        return stringBuilder.toString();
+
+        @Override
+        public String toString() {
+
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(val);
+            ListNode tmp = next;
+            while (tmp != null) {
+                stringBuilder.append("-->").append(tmp.val);
+                tmp = tmp.next;
+            }
+            return stringBuilder.toString();
+        }
     }
 }
+
