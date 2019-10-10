@@ -36,6 +36,39 @@ public class ReverseList_P206 {
         return listNode;
     }
 
+    /**
+     * 遍历迭代
+     * 使用三个指针
+     * pre：上一结点
+     * cur: 当前结点
+     * next: 当前节点的下一个节点，即cur.next
+     * <p>
+     * 1. next = cur.next
+     * 2. cur.next = pre
+     * 3. pre = cur
+     * 4. cur = next
+     *
+     * @param head
+     * @return
+     */
+    public ListNode reverseList1(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode pre = null;
+        ListNode cur = head;
+        ListNode next;
+        while (cur != null) {
+            next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+
+        return pre;
+    }
+
 
     /**
      *
@@ -60,7 +93,7 @@ public class ReverseList_P206 {
 
         print(n1);
 
-        print(new ReverseList_P206().reverseList(n1));
+        print(new ReverseList_P206().reverseList1(n1));
     }
 
     public static void print(ListNode head) {
