@@ -33,7 +33,6 @@ package com.org.lengchuan.algorithm.leetcode.p1102;
 //
 //1 <= R, C <= 100
 //0 <= A[i][j] <= 10^9
-//通过次数2,236提交次数7,031
 //
 
 /**
@@ -43,7 +42,32 @@ package com.org.lengchuan.algorithm.leetcode.p1102;
  */
 public class Solution {
 
+    int R, C;
+
     public int maximumMinimumPath(int[][] A) {
+        // dfs 记录遍历过的点，直到到达终点
+        // 记录每条路径上的最小值
+        R = A.length;
+        if (R == 0) {
+            return 0;
+        }
+        C = A[0].length;
+
+        int res = 0;
+
+        return res;
+    }
+
+    private void dfs(int res, int min, boolean[][] visited, int x, int y, int[][] A) {
+        min = Math.min(min, A[x][y]);
+        if (x == R - 1 && y == C - 1) {
+            res = Math.max(res, min);
+            return;
+        }
+
+    }
+
+    public static void main(String[] args) {
 
     }
 }
