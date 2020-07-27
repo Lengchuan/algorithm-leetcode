@@ -35,6 +35,8 @@ package com.org.lengchuan.algorithm.leetcode.p1102;
 //0 <= A[i][j] <= 10^9
 //
 
+import java.util.PriorityQueue;
+
 /**
  * @author lengchuan <lishuijun1992@gmail.com>
  * @date 2020/7/14
@@ -45,29 +47,63 @@ public class Solution {
     int R, C;
 
     public int maximumMinimumPath(int[][] A) {
-        // dfs 记录遍历过的点，直到到达终点
-        // 记录每条路径上的最小值
+        // bfs+优先队列，每次优先走最小值越大的路径，如果到达终点，则直接返回，直到所有路径遍历完成
         R = A.length;
         if (R == 0) {
             return 0;
         }
         C = A[0].length;
+        boolean[][] visited = new boolean[R][C];
+        // 上 下 左 右
+        int[][] direct = new int[][]{{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
+        PriorityQueue<Pair> queue = new PriorityQueue<>((o1, o2) -> {
+            return o2.min - o1.min; // 从小到大
+        });
+        queue.add(new Pair(0, 0, A[0][0]));
 
-        int res = 0;
+        while (!queue.isEmpty()) {
+            Pair pair = queue.poll();
+            if (pair.x == R - 1 && pair.y == C - 1) {
+                // 到达终点
+                return pair.min;
+            }
 
-        return res;
-    }
-
-    private void dfs(int res, int min, boolean[][] visited, int x, int y, int[][] A) {
-        min = Math.min(min, A[x][y]);
-        if (x == R - 1 && y == C - 1) {
-            res = Math.max(res, min);
-            return;
+            // 标记当前点已经被访问过
+            visited[pair.x][pair.y] = true;
+            // 未到达终点，继续遍历相邻四个方向的点
+            for (int[] d : direct) {
+                int nextX = pair.x + d[0];
+                int nextY = pair.y + d[1];
+                if (nextX >= 0 && nextX <= R - 1 && nextY >= 0 && nextY <= C - 1 && !visited[nextX][nextY]) {
+                    queue.offer(new Pair(nextX, nextY, Math.min(pair.min, A[nextX][nextY])));
+                }
+            }
         }
 
+        return -1;
+    }
+
+    private static class Pair {
+        int x;
+        int y;
+        int min;
+
+        public Pair(int x, int y, int min) {
+            this.x = x;
+            this.y = y;
+            this.min = min;
+        }
     }
 
     public static void main(String[] args) {
+        // [[5,4,5],[1,2,6],[7,4,6]]
+        int[][] A = new int[][]{
+                {5, 4, 5},
+                {1, 2, 6},
+                {7, 4, 6}
+        };
+
+        System.out.println(new Solution().maximumMinimumPath(A));
 
     }
 }
