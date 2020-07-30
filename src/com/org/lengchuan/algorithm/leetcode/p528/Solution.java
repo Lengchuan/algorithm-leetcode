@@ -42,6 +42,8 @@ package com.org.lengchuan.algorithm.leetcode.p528;
 //
 // Related Topics 二分查找 Random
 
+import java.util.Random;
+
 /**
  * @author lengchuan <lishuijun1992@gmail.com>
  * @date 2020/7/28
@@ -56,12 +58,36 @@ public class Solution {
     // 如图，如果我们从w[0]+w[1] = 4 中随机一个数字，则落在0-1之间的概率为0.25，落在1-4之间的概率为0.75
     // 用一个数组sum[] 来保存各个区间，sum = {1,4}
     // 我们只需要找到随机数落在哪个区间即可，返回其索引
+    // 比如x = 1 时，我们找到第一个x<sum[i]的位置，也就是sum[0]，返回索引0
+    // 比如x = 3 时，我们找到第一个x<sum[i]的位置，也就是sum[1]，返回索引1
+
+    int[] sum;
+
+    int S;
+
+    Random random = new Random();
 
     public Solution(int[] w) {
-
+        sum = new int[w.length];
+        sum[0] = w[0];
+        for (int i = 1; i < w.length; i++) {
+            sum[i] = sum[i - 1] + w[i];
+        }
+        S = sum[w.length - 1];
     }
 
     public int pickIndex() {
+        int r = random.nextInt(S);
+        int left = 0;
+        int right = 0;
+        int mid = 0;
+        while (left < right) {
+            mid = (left + right) / 2;
+            if (mid == 0 || r >= sum[mid - 1]) {
+                return mid;
+            }
+        }
 
+        return -1;
     }
 }
