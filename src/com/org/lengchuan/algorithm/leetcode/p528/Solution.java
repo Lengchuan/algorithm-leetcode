@@ -79,12 +79,18 @@ public class Solution {
     public int pickIndex() {
         int r = random.nextInt(S);
         int left = 0;
-        int right = 0;
-        int mid = 0;
-        while (left < right) {
-            mid = (left + right) / 2;
-            if (mid == 0 || r >= sum[mid - 1]) {
-                return mid;
+        int right = sum.length - 1;
+        int mid;
+        while (left <= right) {
+            mid = left + (right - left) / 2;
+            if (sum[mid] > r) {
+                if (mid == 0 || r >= sum[mid - 1]) {
+                    return mid;
+                } else {
+                    right = mid - 1;
+                }
+            } else {
+                left = mid + 1;
             }
         }
 
