@@ -24,68 +24,39 @@ class Solution {
             return s;
         }
         // 先选择一个字符，然后向左右两边进行扩展，如果是回文子串，记录，同时更新最大子串
+        // 1. 回文串是奇数
+        // 2. 回文串是偶数
 
         String res = "";
-        char[] arr = s.toCharArray();
-        // 1. 中心向两边扩展
         for (int i = 0; i < s.length(); i++) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(arr[i]);
-            int l = i - 1;
-            int r = i + 1;
-            while (true) {
-                if (l >= 0 && r < arr.length && arr[l] == arr[r]) { // 两边扩展
-                    sb.insert(0, arr[l]);
-                    sb.append(arr[r]);
-                    l--;
-                    r++;
-                    continue;
-                }
-                // 1. 尝试向左边扩展
-                if (l >= 0 && isPalindrome(String.valueOf(arr[l]), sb.toString())) {
-                    sb.insert(0, arr[l]);
-                    l--;
-                    continue;
-                }
-
-                // 2. 尝试向右边扩展
-                if (r < arr.length && isPalindrome(sb.toString(), String.valueOf(arr[r]))) {
-                    sb.append(arr[r]);
-                    r++;
-                    continue;
-                }
-                break;
-            }
-            res = res.length() < sb.length() ? sb.toString() : res;
+            String s1 = helper(s, i, i); // 奇数
+            String s2 = helper(s, i, i + 1); // 偶数
+            String s3 = s1.length() > s2.length() ? s1 : s2;
+            res = s3.length() > res.length() ? s3 : res;
         }
 
         return res;
     }
 
-    private boolean isPalindrome(String s1, String s2) {
-        String s = s1 + s2;
-        if (s.length() <= 1) {
-            return true;
-        }
-        int low = 0;
-        int high = s.length() - 1;
-        while (low <= high) {
-            if (s.charAt(low) != s.charAt(high)) {
-                return false;
+    private String helper(String s, int left, int right) {
+        while (left >= 0 && right < s.length()) {
+            if (s.charAt(left) != s.charAt(right)) {
+                break;
             }
-            low++;
-            high--;
+            left--;
+            right++;
         }
 
-        return true;
+        // left+1 是因为多减了一次
+        return s.substring(left + 1, right);
     }
 
     public static void main(String[] args) {
         System.out.println(new Solution().longestPalindrome("aaaa"));
         System.out.println(new Solution().longestPalindrome("bb"));
-//        System.out.println(new Solution().longestPalindrome("babad"));
-//        System.out.println(new Solution().longestPalindrome("cbbd"));
-//        System.out.println(new Solution().longestPalindrome("tattarrattat"));
+        System.out.println(new Solution().longestPalindrome("babad"));
+        System.out.println(new Solution().longestPalindrome("cbbd"));
+        System.out.println(new Solution().longestPalindrome("tattarrattat"));
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
