@@ -61,33 +61,25 @@ import java.util.Arrays;
 public class Solution {
     public int coinChange(int[] coins, int amount) {
         // 动态规划
-        // 转态:amount
-        // 状态变化，amount 增加
-        // 最优子问题: 每次都使用最少的硬币凑出子问题的解
-        if (null == coins || coins.length == 0) {
-            return -1;
-        }
-        int[] dp = new int[amount + 1];// dp[n]保存的是凑出n需要的最少零钱数,因为是从0开始，需要+1
+        // 完全背包问题,外层循环用coins，内层循环用amount 正序
+        // 最值问题,这里求的是个数，使用转态转移方程 dp[i] = max/min(dp[i], dp[i-nums]+1)
+        int[] dp = new int[amount + 1];
         Arrays.fill(dp, Integer.MAX_VALUE - 1);
         dp[0] = 0;
-        for (int i = 1; i <= amount; i++) {
-            for (int coin : coins) {
-                if (i - coin >= 0) {
-                    // 可以凑出来,刚好够或者还不够
-                    // dp[i] 是已经求出的可以凑出当前amount的最少次数
-                    // dp[i - coin] + 1 为什么需要+1,因为dp[i - coin]需要在加上本次的coin才达到amount甚至比amount还小
-                    //
+        for (int coin : coins) {
+            for (int i = 0; i <= amount; i++) {
+                if (coin <= i) {
                     dp[i] = Math.min(dp[i], dp[i - coin] + 1);
                 }
             }
         }
 
-        //dp[amount] == 0 金额为amount无解
         return dp[amount] == Integer.MAX_VALUE - 1 ? -1 : dp[amount];
     }
 
     public static void main(String[] args) {
-        System.out.println(new Solution().coinChange(new int[]{1, 2, 5}, 11));
+//        System.out.println(new Solution().coinChange(new int[]{1, 2, 5}, 11));
+        System.out.println(new Solution().coinChange(new int[]{2}, 3));
     }
 
 }
